@@ -60,7 +60,20 @@ class UserDB {
     $statement->execute();
     $statement->closeCursor();
     }
-
+    public static function get_password_by_userName($userName) {
+        $db = Database::getDB();
+        $query = 'SELECT password FROM users
+                  WHERE username = :userName';
+        $statement = $db->prepare($query);
+        $statement->bindValue(":userName", $userName);
+        $statement->execute();
+        $password = $statement->fetch();
+        $statement->closeCursor();
+        if ($password === false) {
+            return false;
+        }
+        return $password[0];
+    }
    
 }
 ?>

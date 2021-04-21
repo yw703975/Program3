@@ -5,9 +5,9 @@
 <main>
 
         <br>
-         <a href="index.php?action=register_member">Member Registration</a><br><br>
+         <a href="index.php?action=register_user">User Registration</a><br><br>
 
-         <a href="index.php?action=login_member"> Member Login</a><br><br>
+         <a href="index.php?action=login_user"> User Login</a><br><br>
 </main>
  </body>
 </html>
