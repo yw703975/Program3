@@ -23,12 +23,12 @@ class UserDB {
         return $users;
     }
 
-    public static function getAllUsersByUserID($userID) {
+    public static function getAllUsersByUserID($userName) {
         $db = Database::getDB();
         $query = 'SELECT * FROM users
-                  WHERE userID = :userID';
+                  WHERE userName = :userName';
         $statement = $db->prepare($query);
-        $statement->bindValue(":userID", $userID);
+        $statement->bindValue(":userName", $userName);
         $statement->execute();
         $users = $statement->fetch();
         $statement->closeCursor();
@@ -36,22 +36,42 @@ class UserDB {
 
     }
 
+    public static function check_for_unique_userName($userName) {
+        $db = Database::getDB();
+        $userQuery = 'SELECT userName FROM users WHERE userName = :userName';
+        $userStatement = $db->prepare($userQuery);
+        $userStatement->bindValue(':userName', $userName);
+        $userStatement->execute();
+        $uniqueUser = $userStatement->fetch();
+        $userStatement->closeCursor();
+        return $uniqueUser;
+    }
+    
+    public static function check_for_unique_email($email) {
+        $db = Database::getDB();
+        $emailQuery = 'SELECT email FROM users WHERE email = :email';
+        $emailStatement = $db->prepare($emailQuery);
+        $emailStatement->bindValue(':email', $email);
+        $emailStatement->execute();
+        $uniqueEmail = $emailStatement->fetch();
+        $emailStatement->closeCursor();
+        return $uniqueEmail;
+    }
 
-  
 
     public static function insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto) {
     $db = Database::getDB();
     $query = 'INSERT INTO users
                  (firstName, lastName,
-                  userName, password,email, sex, birthDay, height, userPhoto)
+                  userName, passWord,email, sex, birthDay, height, userPhoto)
               VALUES
                  (:firstName, :lastName,
-                 :userName, :password,:email, :sex, :birthDay, :height, :userPhoto)';
+                 :userName, :passWord,:email, :sex, :birthDay, :height, :userPhoto)';
     $statement = $db->prepare($query);
     $statement->bindValue(':firstName', $firstName);
     $statement->bindValue(':lastName', $lastName);
     $statement->bindValue(':userName', $userName);
-    $statement->bindValue(':password', $password);    
+    $statement->bindValue(':passWord', $passWord);    
     $statement->bindValue(':email', $email);
     $statement->bindValue(':sex', $sex);    
     $statement->bindValue(':birthDay', $birthDay);    
@@ -60,6 +80,8 @@ class UserDB {
     $statement->execute();
     $statement->closeCursor();
     }
+    
+    
     public static function get_password_by_userName($userName) {
         $db = Database::getDB();
         $query = 'SELECT password FROM users

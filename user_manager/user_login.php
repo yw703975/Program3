@@ -2,7 +2,7 @@
 //require_once 'member_manager/confirmation.php'; 
 include 'view/header.php'; 
 $userNameError="";
-$passwordError="";
+$passWordError="";
 
 ?>
 <html>
@@ -13,7 +13,7 @@ $passwordError="";
 </head>
 
     <form action="index.php" method="post">
-        <input type="hidden" name="action" value="login_member">
+        <input type="hidden" name="action" value="login_user">
 
     <fieldset> 
     <legend>User Login</legend>        
@@ -24,8 +24,8 @@ $passwordError="";
         <br>
         
         <label>Password: </label>
-        <input type="password" name="password" value="<?php echo htmlspecialchars($userName); ?>">
-      <span> <?php echo htmlspecialchars($passwordError) ?></span> 
+        <input type="password" name="passWord" value="<?php echo htmlspecialchars($passWord); ?>">
+      <span> <?php echo htmlspecialchars($passWordError) ?></span> 
         
     </fieldset>
         <br>

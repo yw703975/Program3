@@ -11,8 +11,8 @@
         if (!isset($email)) {
             $email = '';
         }
-        if (!isset($password)) {
-            $password = '';
+        if (!isset($passWord)) {
+            $passWord = '';
         }
         if (!isset($sex)) {
             $sex = '';
@@ -23,7 +23,9 @@
         if (!isset($height)) {
             $height = '';
         }
-
+        if (!isset($userPhoto)) {
+            $userPhoto = '';
+        }
         
         if (!isset($firstNameError)) {
             $firstNameError = '';
@@ -37,8 +39,8 @@
         if (!isset($emailError)) {
             $emailError = '';
         }
-        if (!isset($passwordError)) {
-            $passwordError = '';
+        if (!isset($passWordError)) {
+            $passWordError = '';
         }
         if (!isset($pwdCapital)) {
             $pwdCapital = '';

@@ -30,16 +30,19 @@ switch ($action) {
       
         
     case 'login_user':
-             $userName = filter_input(INPUT_POST, 'userName');
-        $password = filter_input(INPUT_POST, 'password');
-        $pwdHash = UserDB::get_password_by_userName($userName);
-    // var_dump(password_verify($password, $pwdHash));
 
-        if (password_verify($password, $pwdHash))
+        $userName = filter_input(INPUT_POST, 'userName');
+        $passWord = filter_input(INPUT_POST, 'passWord');
+          
+        $pwdHash = UserDB::get_password_by_userName($userName);
+   // var_dump($passWord);
+
+        if (password_verify($passWord, $pwdHash))
         {   $passwordError = "";
             $_SESSION['loginUser'] = $userName;
-            $user = UserDB::get_user_by_userName($userName);
-            include('./user_manager/confirmation.php');
+            
+            $user = UserDB::getAllUsersByUserID($userName);
+            include("./view/showUser.php");
          
   
         }else 
@@ -64,15 +67,15 @@ switch ($action) {
         
                include("./user_manager/validation.php");
 
-        if ($firstNameError !== '' || $lastNameError !== '' || $userNameError !== '' || $emailError !== '' || $passwordError !== '') {
+        if ($firstNameError !== '' || $lastNameError !== '' || $userNameError !== '' || $emailError !== '' || $passWordError !== '') {
             include("./user_manager/user_add.php");
             die();
         } else {
-            $image ='./images/1.png';
+          //  $userPhoto ='./userPhotos/1.png';
 
             $user = new User($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
             UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
-            include("./view/addConfirmation.php");
+            include("./view/showUser.php");
             die();
         }        
         

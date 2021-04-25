@@ -5,11 +5,11 @@
         $lastName = filter_input(INPUT_POST, 'lastName');
         $userName = filter_input(INPUT_POST, 'userName');
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $password = filter_input(INPUT_POST, 'password');
-        $birthday = filter_input(INPUT_POST, 'birthday');
+        $passWord = filter_input(INPUT_POST, 'passWord');
+        $sex = filter_input(INPUT_POST, 'sex');
+        $birthDay = filter_input(INPUT_POST, 'birthDay');
         $height = filter_input(INPUT_POST, 'height');
-
-        $userPhoto =  './images';
+        $userPhoto =  '.image/';
         $_SESSION['loginMember'] = $userName;
 
         $firstNameError = '';
@@ -20,6 +20,7 @@
         } else {
             $firstNameError = '';
         }
+        
         $lastNameError = '';
         if ($lastName == '') { 
             $lastNameError = 'Last name is required.';
@@ -28,6 +29,7 @@
         } else {
             $lastNameError = '';
         }
+        
         $userNameError = '';
         if ($userName == '') { 
             $userNameError = 'userName is required.';
@@ -39,12 +41,41 @@
             $userNameError = '';
         }
 
+        
+        
         $emailError = '';
         if ($email == '') { 
             $emailError = 'Must be a valid email.';
         }
-        //if email is not unique, check database
-
+  
+        $sexError="";
+     //   var_dump($sex);
+        if ($sex == '') { 
+            $sexError = 'Sex is required.';
+        } else if (!preg_match('/^[A-Za-z]/', $sex)) {
+            $sexError = 'First name must start with a letter';
+        } else {
+            $sexError = '';
+        }
+        
+        $birthDayError="";
+        if ($birthDay == '') { 
+            $birthDayError = 'Birth Day is required.';
+//        } else if (!preg_match('/^[A-Za-z]/', $birthDay)) {
+//            $birthDayError = 'First name must start with a letter';
+        } else {
+            $birthDayError = '';
+        }
+ 
+        $heightError="";
+        if ($height == '') { 
+            $heightError = 'Heighte is required.';
+//        } else if (!preg_match('/^[A-Za-z]/', $height)) {
+//            $heightError = 'First name must start with a letter';
+        } else {
+            $heightError = '';
+        }
+        
         $pwdCapital = "Must have a uppercase character";
         $pwdLower = "Must have a lowercase character";
         $pwdNum = "Must include a digit number";
@@ -53,19 +84,19 @@
         $counter = 0;
         $password_valid = true;
 
-        if (preg_match('/[A-Z+]/', $password)) {
+        if (preg_match('/[A-Z+]/', $passWord)) {
             $counter += 1;
             $pwdCapital = "";
         }
-        if (preg_match('/[a-z+]/', $password)) {
+        if (preg_match('/[a-z+]/', $passWord)) {
             $counter += 1;
             $pwdLower = "";
         }
-        if (preg_match('/[0-9+]/', $password)) {
+        if (preg_match('/[0-9+]/', $passWord)) {
             $counter += 1;
             $pwdNum = "";
         }
-        if (preg_match('/[\W+]/', $password)) {
+        if (preg_match('/[\W+]/', $passWord)) {
             $counter += 1;
             $pwdNonword = "";
         }
@@ -77,59 +108,62 @@
             $pwdLower = "";
             $pwdNum = "";
             $pwdNonword = "";
-            $passwordError = "";
+            $passWordError = "";
             $password_valid = true;
         }
-        if (strlen($password) < 10) {
-            $passwordError = $pwdLength;
+        if (strlen($passWord) < 10) {
+            $passWordError = $pwdLength;
             $password_valid = false;
         } else {
             $password_valid = true;
         }
 
         if ($password_valid) {
-            $pwdHash = password_hash($password, PASSWORD_BCRYPT);
+            $pwdHash = password_hash($passWord, PASSWORD_BCRYPT);
         //    var_dump($pwdHash);
 
 
-        if (password_verify($password, $pwdHash)) {
-                 $password= $pwdHash  ;
+        if (password_verify($passWord, $pwdHash)) {
+                 $passWord= $pwdHash  ;
           } else {
                echo 'Invalid password.';
            }
          
         }
   
-       if (!empty(MemberDB::check_for_unique_userName($userName))) {
+       if (!empty(UserDB::check_for_unique_userName($userName))) {
             $userNameError = "User name already taken.";
         }
 
-       if (!empty(MemberDB::check_for_unique_email($email))) {
+       if (!empty(UserDB::check_for_unique_email($email))) {
            $emailError = "Email already being used.";
         }
 
-        if (isset($_FILES['image'])) {
-            $errors = array();
-            $file_name = $_FILES['image']['name'];
-            $file_size = $_FILES['image']['size'];
-            $file_tmp = $_FILES['image']['tmp_name'];
-            $file_type = $_FILES['image']['type'];
-            $temp = $_FILES['image']['name'];
-            $temp = explode('.', $temp);
-            $temp = end($temp);
-            $file_ext = strtolower($temp);
-            $userPhoto = "./images/" . $userName ."_". $file_name;
+    if(isset($_FILES['userPhoto'])){
+      $errors= array();
+      $file_name = $_FILES['userPhoto']['name'];
+      $file_size =$_FILES['userPhoto']['size'];
+      $file_tmp =$_FILES['userPhoto']['tmp_name'];
+      $file_type=$_FILES['userPhoto']['type'];
+      $temp = $_FILES['userPhoto']['name'];
+      $temp = explode('.', $temp);
+      $temp = end($temp);
+      $file_ext = strtolower($temp);
+      $userPhoto = "./images/" ."_".$userName ."_". $file_name;
+     
+      $extensions= array("jpeg","jpg","png", "gif");
+      
+      if(in_array($file_ext,$extensions)=== false){
+         $errors[]="file extension not in whitelist: " . join(',',$extensions);
+      }
+      
+      if(empty($errors)==true){
+         move_uploaded_file($file_tmp,$userPhoto);
+         echo htmlspecialchars("Success");
+      }else{
 
-            $extensions = array("jpeg", "jpg", "png", "gif");
-            if (in_array($file_ext, $extensions) === false) {
-                $errors[] = "file extension not in whitelist: " . join(',', $extensions);
-            }
-
-            if (empty($errors) == true) {
-                move_uploaded_file($file_tmp, $image);
-
-            }
-        }
+      }
+   }
 
    
        

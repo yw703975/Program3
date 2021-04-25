@@ -1,5 +1,8 @@
-<?php include 'view/header.php'; ?>
-
+<?php include 'view/header.php'; 
+  if (strlen($passWord) >50) {
+    $passWord=''  ;
+  }
+  ?>
 
 <!DOCTYPE html>
 
@@ -42,18 +45,9 @@
         
 
         
-        <label>Password: </label>
-        <input type="password" name="password" value="<?php echo htmlspecialchars($password); ?>">
-        <span> <?php echo htmlspecialchars($passwordError) ?></span> 
-        <br><span><?php echo htmlspecialchars($pwdCapital)?></span>
-        <br><span><?php echo htmlspecialchars($pwdLower)?></span>
-        <br><span><?php echo htmlspecialchars($pwdNum)?></span>
-        <br><span><?php echo htmlspecialchars($pwdNonword)?></span>   
-        <br>
-        
                 
         <label>Sex:  </label>
-        <input type="text" name="Sex" value="<?php echo htmlspecialchars($sex); ?>">
+        <input type="text" name="sex" value="<?php echo htmlspecialchars($sex); ?>">
         <span> <?php echo htmlspecialchars($sexError) ?></span> 
         <br>
         
@@ -70,7 +64,19 @@
         <span> <?php echo htmlspecialchars($heightError) ?></span> 
         <br>
         
-    
+  
+        
+        <label>PassWord: </label>
+        <input type="password" name="passWord" value="<?php echo htmlspecialchars($passWord); ?>">
+        <span> <?php echo htmlspecialchars($passWordError) ?></span> 
+        <br><span><?php echo htmlspecialchars($pwdCapital)?></span>
+        <br><span><?php echo htmlspecialchars($pwdLower)?></span>
+        <br><span><?php echo htmlspecialchars($pwdNum)?></span>
+        <br><span><?php echo htmlspecialchars($pwdNonword)?></span>   
+        <br>  
+   
+            <label>User Photo:</label>
+            <input type='file' name='userPhoto' value='<?php echo htmlspecialchars($userPhoto); ?>'><br>        
         
     </fieldset>
   
