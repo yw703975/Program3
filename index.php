@@ -13,6 +13,7 @@ if (empty($_SESSION['loginUser'])) {
     $_SESSION['loginUser'] = 'defaultUser';
 }
 
+
 $action = filter_input(INPUT_POST, 'action');
 if ($action === null) {
     $action = filter_input(INPUT_GET, 'action');
@@ -33,29 +34,32 @@ switch ($action) {
 
         $userName = filter_input(INPUT_POST, 'userName');
         $passWord = filter_input(INPUT_POST, 'passWord');
-          
         $pwdHash = UserDB::get_password_by_userName($userName);
-   // var_dump($passWord);
 
+        if($_SESSION['loginUser'] ==  'defaultUser'){
+                var_dump(1);
+            $userName = $_SESSION['loginUser'];
+            $user = UserDB::getAllUsersByUserID($userName);
+         include('./user_manager/user_login.php');
+         break;
+        } else{
         if (password_verify($passWord, $pwdHash))
         {   $passwordError = "";
             $_SESSION['loginUser'] = $userName;
-            
+
             $user = UserDB::getAllUsersByUserID($userName);
             include("./view/showUser.php");
          
   
         }else 
         {
-        
+
             include('./user_manager/user_login.php');
-         
+        } 
         }
     break;  
-        include('./user_manager/user_login.php');
-
-         break;
-      
+       
+   
 
     case 'register_user':
        
@@ -73,8 +77,8 @@ switch ($action) {
         } else {
           //  $userPhoto ='./userPhotos/1.png';
 
-            $user = new User($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
-            UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+       //     $user = new User($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+           $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
             include("./view/showUser.php");
             die();
         }        
@@ -82,19 +86,35 @@ switch ($action) {
 
         break;
        
-        include('./user_manager/user_add.php');
 
-         break;
       
 
     case 'list_user':
-       
-        include('./user_manager/user_list.php');
+        $userName = filter_input(INPUT_POST, 'userName');
+      //      $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+           $users= UserDB::getAllUsers(); 
+          
 
-         break;
-      
        
+        if ($_SESSION['loginMember'] !== 'defaultUser') {
+    
+             include('./user_manager/user_list.php');
+        } else {
+          include('./view/welcome_user.php');
+        }     
+
+        break;
         
+        
+        case 'delete_user':
+        $userName = filter_input(INPUT_POST, 'userName');
+        UserDB::delete_user($userName);
+         $users= UserDB::getAllUsers(); 
+             include('./user_manager/user_list.php');
+   
 
-}      
+        break;
+
+}   
+
 ?>

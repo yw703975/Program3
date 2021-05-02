@@ -9,7 +9,7 @@
         $sex = filter_input(INPUT_POST, 'sex');
         $birthDay = filter_input(INPUT_POST, 'birthDay');
         $height = filter_input(INPUT_POST, 'height');
-        $userPhoto =  '.image/';
+        $userPhoto =  '.image/1.png';
         $_SESSION['loginMember'] = $userName;
 
         $firstNameError = '';
@@ -52,9 +52,7 @@
      //   var_dump($sex);
         if ($sex == '') { 
             $sexError = 'Sex is required.';
-        } else if (!preg_match('/^[A-Za-z]/', $sex)) {
-            $sexError = 'First name must start with a letter';
-        } else {
+        }  else {
             $sexError = '';
         }
         

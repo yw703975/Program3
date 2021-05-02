@@ -20,12 +20,12 @@ include 'view/header.php';
             <th>First Name</th>
             <th>Last Name</th>
             <th>User Name</th>
-            <th>Password </th>
+
             <th>Email </th>
             <th>Sex </th>
-            <th>Birthday </th>
+            <th>BirthDay </th>
             <th>Height </th>
-            <th>User’s photo </th>
+
             <th>&nbsp;</th>
         </tr>
             <?php foreach ($users as $user) : ?>  
@@ -34,9 +34,10 @@ include 'view/header.php';
             <td><?php echo htmlspecialchars($user['firstName']) ?></td>
             <td><?php echo htmlspecialchars($user['lastName']) ?></td>
             <td><?php echo htmlspecialchars($user['userName']) ?></td>
-            <td><?php echo htmlspecialchars($user['passWord']) ?></td>
+
             <td><?php echo htmlspecialchars($user['email']) ?></td>
-            <td><?php echo htmlspecialchars($user['birthday']) ?></td>
+            <td><?php echo htmlspecialchars($user['sex']) ?></td>
+            <td><?php echo htmlspecialchars($user['birthDay']) ?></td>
             <td><?php echo htmlspecialchars($user['height']) ?></td>
 
           

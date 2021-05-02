@@ -96,6 +96,14 @@ class UserDB {
         }
         return $password[0];
     }
-   
+    public static function delete_user($userName) {
+     $db = Database::getDB();
+     $query = 'DELETE FROM users
+               WHERE userName = :userName';
+     $statement = $db->prepare($query);
+     $statement->bindValue(':userName', $userName);
+     $statement->execute();
+     $statement->closeCursor();
+    }
 }
 ?>

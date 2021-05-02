@@ -4,7 +4,7 @@
 <main>
     <h1>Member Registration Successful</h1>
     
-    <h4><?php echo "Thank you " . $user['userName']  ?></br>
+    <h4><?php echo "Thank you " . $userName  ?></br>
         <?php echo  htmlspecialchars("You have been registered.") ?></h4>
 
     
