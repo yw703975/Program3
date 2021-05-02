@@ -8,6 +8,8 @@ session_start();
 require_once './model/database.php';
 require_once './model/user.php';
 require_once './model/user_db.php';
+require_once './model/userdata.php';
+require_once './model/userdata_db.php';
 
 if (empty($_SESSION['loginUser'])) {
     $_SESSION['loginUser'] = 'defaultUser';
@@ -104,6 +106,35 @@ switch ($action) {
         }     
 
         break;
+        
+     case 'add_userdata':
+         $mydateError = '';
+              $milesError = '';
+             $weightError = '';
+         
+        
+               include("./user_manager/userdata_validation.php");
+           $userName = $_SESSION['loginUser'];
+                var_dump($userName);              
+               var_dump($mydate);
+               var_dump($miles);
+               var_dump($weight);
+        if ($mydateError !== '' || $milesError !== '' || $weightError !== '') {
+            include("./user_manager/userdata_add.php");
+            die();
+        } else {
+
+
+           
+           UserdataDB::insertUserdata($userName, $mydate, $miles, $weight);
+            include("./view/showUser.php");
+            die();
+        }        
+        
+
+        break;
+       
+        
         
         
         case 'delete_user':

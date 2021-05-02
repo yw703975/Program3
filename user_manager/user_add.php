@@ -53,7 +53,7 @@
         
         
         <label>BirthDay:  </label>
-        <input type="text" name="birthDay" value="<?php echo htmlspecialchars($birthDay); ?>">
+        <input type="date" name="birthDay" value="<?php echo htmlspecialchars($birthDay); ?>">
         <span> <?php echo htmlspecialchars($birthDayError) ?></span> 
         <br>
         
