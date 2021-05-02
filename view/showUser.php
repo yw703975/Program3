@@ -16,6 +16,7 @@
 <!--    Passing the info to the controller.-->
     <p><a href="index.php?action=add_userdata" >Input  Your  Data</a></p>
     <p><a href="index.php?action=list_user" >List User</a></p>
+        <p><a href="index.php?action=list_userdata" >List Userdata</a></p>
     <p><a href="index.php?action=register_user">Register New User</a></p>
     <p><a href="index.php?action=login_user">Log In</a></p>
     <br> 

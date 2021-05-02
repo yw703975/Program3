@@ -107,6 +107,24 @@ switch ($action) {
 
         break;
         
+       case 'list_userdata':
+        $userName = filter_input(INPUT_POST, 'userName');
+      //      $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+           $userdatas= UserdataDB::getAllUserdata(); 
+          
+
+       
+        if ($_SESSION['loginMember'] !== 'defaultUser') {
+    
+             include('./user_manager/userdata_list.php');
+        } else {
+          include('./view/welcome_user.php');
+        }     
+
+        break;     
+        
+        
+        
      case 'add_userdata':
          $mydateError = '';
               $milesError = '';

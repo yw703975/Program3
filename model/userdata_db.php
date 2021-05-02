@@ -1,10 +1,10 @@
 <?php
 class UserdataDB {
 
-    public static function getAllUserdate() {
+    public static function getAllUserdata() {
         $db = Database::getDB();
 
-        $query = 'SELECT * FROM userdate';
+        $query = 'SELECT * FROM userdata';
         $statement = $db->prepare($query);
         $statement->execute();
         $users = $statement->fetchAll();
@@ -14,7 +14,7 @@ class UserdataDB {
     public static function getAllUsersByOrder() {
         $db = Database::getDB();
 
-        $query = 'SELECT * FROM userdate
+        $query = 'SELECT * FROM userdata
                            ORDER BY userID';
         $statement = $db->prepare($query);
         $statement->execute();
