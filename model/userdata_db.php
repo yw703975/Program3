@@ -23,14 +23,15 @@ class UserdataDB {
         return $users;
     }
 
-    public static function getAllUsersByUserID($userID) {
+    public static function getAllUsersByuserName($userName) {
         $db = Database::getDB();
-        $query = 'SELECT * FROM userdata
-                  WHERE userID = :userID';
+        $query = 'SELECT userName,mydate,miles,weight FROM userdata
+                  WHERE userName = :userName';
         $statement = $db->prepare($query);
-        $statement->bindValue(":userID", $userID);
+        $statement->bindValue(":userName", $userName);
+
         $statement->execute();
-        $users = $statement->fetch();
+        $users = $statement->fetchAll();
         $statement->closeCursor();
         return $users;
 
@@ -93,9 +94,9 @@ class UserdataDB {
         }
         return $password[0];
     }
-    public static function delete_user($userName) {
+    public static function delete_userdata($userName) {
      $db = Database::getDB();
-     $query = 'DELETE FROM users
+     $query = 'DELETE FROM userdata
                WHERE userName = :userName';
      $statement = $db->prepare($query);
      $statement->bindValue(':userName', $userName);

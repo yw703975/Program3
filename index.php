@@ -38,19 +38,21 @@ switch ($action) {
         $passWord = filter_input(INPUT_POST, 'passWord');
         $pwdHash = UserDB::get_password_by_userName($userName);
 
-        if($_SESSION['loginUser'] ==  'defaultUser'){
-                var_dump(1);
+        if($_SESSION['loginUser'] !==  'defaultUser'){
+
             $userName = $_SESSION['loginUser'];
             $user = UserDB::getAllUsersByUserID($userName);
-         include('./user_manager/user_login.php');
-         break;
+         include('./view/showUser.php');
+
         } else{
         if (password_verify($passWord, $pwdHash))
-        {   $passwordError = "";
+        {  
+
+            $passwordError = "";
             $_SESSION['loginUser'] = $userName;
 
             $user = UserDB::getAllUsersByUserID($userName);
-            include("./view/showUser.php");
+         include('./view/showUser.php');
          
   
         }else 
@@ -60,6 +62,10 @@ switch ($action) {
         } 
         }
     break;  
+        case 'logout_user':
+        $_SESSION['loginUser'] = 'defaultUser';
+        include('./view/welcome_user.php');
+    break;
        
    
 
@@ -81,6 +87,8 @@ switch ($action) {
 
        //     $user = new User($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
            $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+             $_SESSION['loginUser'] = $userName;
+
             include("./view/showUser.php");
             die();
         }        
@@ -92,13 +100,13 @@ switch ($action) {
       
 
     case 'list_user':
-        $userName = filter_input(INPUT_POST, 'userName');
+      //  $userName = filter_input(INPUT_POST, 'userName');
       //      $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
            $users= UserDB::getAllUsers(); 
           
 
        
-        if ($_SESSION['loginMember'] !== 'defaultUser') {
+        if ($_SESSION['loginUser'] !== 'defaultUser') {
     
              include('./user_manager/user_list.php');
         } else {
@@ -108,13 +116,15 @@ switch ($action) {
         break;
         
        case 'list_userdata':
-        $userName = filter_input(INPUT_POST, 'userName');
-      //      $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
-           $userdatas= UserdataDB::getAllUserdata(); 
-          
+          $userName = filter_input(INPUT_POST, 'userName');
+
+
+
+   //    $userdatas= UserdataDB::getAllUserdata(); 
+       $userdatas= UserdataDB::getAllUsersByuserName($_SESSION['loginUser']);
 
        
-        if ($_SESSION['loginMember'] !== 'defaultUser') {
+        if ($_SESSION['loginUser'] !== 'defaultUser') {
     
              include('./user_manager/userdata_list.php');
         } else {
@@ -123,21 +133,25 @@ switch ($action) {
 
         break;     
         
-        
+           case 'line':
+        $userName = filter_input(INPUT_POST, 'userName');
+      //      $user=UserDB::insertUser($firstName, $lastName, $userName, $passWord, $email, $sex, $birthDay, $height, $userPhoto);
+           $userdatas= UserdataDB::getAllUserdata(); 
+  
+          include('./view/line.php');
+          
+         break;         
         
      case 'add_userdata':
-         $mydateError = '';
-              $milesError = '';
-             $weightError = '';
-         
+
+              include("./user_manager/userdata_validation.php");
+
         
-               include("./user_manager/userdata_validation.php");
+   
            $userName = $_SESSION['loginUser'];
-                var_dump($userName);              
-               var_dump($mydate);
-               var_dump($miles);
-               var_dump($weight);
-        if ($mydateError !== '' || $milesError !== '' || $weightError !== '') {
+
+        if ($mydate == '' || $miles== '' || $weight== '') {
+
             include("./user_manager/userdata_add.php");
             die();
         } else {
@@ -160,6 +174,15 @@ switch ($action) {
         UserDB::delete_user($userName);
          $users= UserDB::getAllUsers(); 
              include('./user_manager/user_list.php');
+   
+
+        break;
+    
+            case 'delete_userdata':
+        $userName = filter_input(INPUT_POST, 'userName');
+        UserdataDB::delete_userdata($userName);
+       $userdatas= UserdataDB::getAllUserdata(); 
+             include('./user_manager/userdata_list.php');
    
 
         break;

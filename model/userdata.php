@@ -1,14 +1,15 @@
 <?php
 class Userdata{
-    private  $userID,$mydate, $miles,$weight;
-    function __construct($userID, $mydate, $miles, $weight) {
-        $this->userID = $userID;
+    private  $userName,$mydate, $miles,$weight;
+    function __construct($userName, $mydate, $miles, $weight) {
+        $this->userName = $userName;
         $this->mydate = $mydate;
         $this->miles = $miles;
         $this->weight = $weight;
     }
-    function getUserID() {
-        return $this->userID;
+
+    function getUserName() {
+        return $this->userName;
     }
 
     function getMydate() {
@@ -23,8 +24,8 @@ class Userdata{
         return $this->weight;
     }
 
-    function setUserID($userID) {
-        $this->userID = $userID;
+    function setUserName($userName) {
+        $this->userName = $userName;
     }
 
     function setMydate($mydate) {
@@ -38,6 +39,8 @@ class Userdata{
     function setWeight($weight) {
         $this->weight = $weight;
     }
+
+
 
 
 }

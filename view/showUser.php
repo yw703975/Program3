@@ -1,4 +1,6 @@
-<?php include 'view/header.php'; ?>
+<?php include 'view/header.php';
+
+?>
 <!DOCTYPE html>
 
 <main>
@@ -18,7 +20,7 @@
     <p><a href="index.php?action=list_user" >List User</a></p>
         <p><a href="index.php?action=list_userdata" >List Userdata</a></p>
     <p><a href="index.php?action=register_user">Register New User</a></p>
-    <p><a href="index.php?action=login_user">Log In</a></p>
+    <p><a href="index.php?action=logout_user">Log out</a></p>
     <br> 
     </main>
 

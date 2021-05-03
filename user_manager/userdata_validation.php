@@ -12,7 +12,7 @@
         
        $mydateError = '';
         if ($mydate == '') { 
-            $mydateError = 'Must be a valid date.';
+       //     $mydateError = 'Must be a valid date.';
         }
 
         

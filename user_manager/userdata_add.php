@@ -1,5 +1,9 @@
 <?php include 'view/header.php'; 
+       $mydateError = '';
+       $milesError = '';
+      $weightError = '';
 
+  
   ?>
 
 <!DOCTYPE html>
@@ -15,7 +19,7 @@
  
     <main>
         
-    <h1>Welcome to add user data </h1>
+    <h1>Welcome to add user <?php echo htmlspecialchars( $_SESSION['loginUser']). "  "; ?>data </h1>
     <form action="index.php" method="post" enctype="multipart/form-data">
         <input type="hidden" name="action" value="add_userdata">
 

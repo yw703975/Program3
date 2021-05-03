@@ -53,7 +53,10 @@ include 'view/header.php';
     </table>
            
             <p><a href="index.php?action=register_user">Registration</a></p>
+           <p><a href="index.php?action=line">line</a></p>
        </main>
+    
+    
 </body>
     
     
